@@ -1,0 +1,28 @@
+import pandas as pd
+import plotly.express as px
+
+def load_data(file_path):
+  
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except FileNotFoundError:
+        print(f"File '{file_path}' not found.")
+        return None
+
+def generate_visualization(data, x_axis, y_axis):
+
+    fig = px.scatter(data, x=x_axis, y=y_axis)
+    return fig
+
+def main():
+    file_path = input("Enter the path to the CSV file: ")
+    data = load_data(file_path)
+    if data is not None:
+        x_axis = input("Enter the column to use for the x-axis: ")
+        y_axis = input("Enter the column to use for the y-axis: ")
+        fig = generate_visualization(data, x_axis, y_axis)
+        fig.show()
+
+if __name__ == "__main__":
+    main()
