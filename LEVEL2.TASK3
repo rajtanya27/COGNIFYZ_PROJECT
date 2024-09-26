@@ -1,0 +1,60 @@
+import re
+
+def password_strength_checker(password):
+  
+    strength = 0
+    suggestions = []
+
+    # Check length
+    if len(password) < 8:
+        suggestions.append("Password should be at least 8 characters long.")
+    else:
+        strength += 1
+
+    
+    if not re.search("[A-Z]", password):
+        suggestions.append("Password should contain at least one uppercase letter.")
+    else:
+        strength += 1
+
+   
+    if not re.search("[a-z]", password):
+        suggestions.append("Password should contain at least one lowercase letter.")
+    else:
+        strength += 1
+
+    
+    if not re.search("[0-9]", password):
+        suggestions.append("Password should contain at least one digit.")
+    else:
+        strength += 1
+
+    if not re.search("[^A-Za-z0-9]", password):
+        suggestions.append("Password should contain at least one special character.")
+    else:
+        strength += 1
+
+   
+    if strength == 5:
+        password_strength = "Strong"
+    elif strength >= 3:
+        password_strength = "Medium"
+    else:
+        password_strength = "Weak"
+
+    return {
+        "password_strength": password_strength,
+        "suggestions": suggestions
+    }
+
+def main():
+    password = input("Enter a password: ")
+    result = password_strength_checker(password)
+    print(f"Password strength: {result['password_strength']}")
+    if result["suggestions"]:
+        print("Suggestions for improvement:")
+        for suggestion in result["suggestions"]:
+            print(f"- {suggestion}")
+
+if __name__ == "__main__":
+    main()
